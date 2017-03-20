@@ -3,6 +3,7 @@ package com.bit2017.mapreduce;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.*;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
@@ -14,15 +15,25 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class WordCount {
 	
+	private static Log log = LogFactory.getLog(WordCount.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1);
-		
+
+		@Override
+		protected void setup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+				throws IOException, InterruptedException {
+			log.info("------> setup() called");
+		}
+
+
+
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
+			log.info("-------------> map() called");
 			String line = value.toString();
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()) {
@@ -30,9 +41,27 @@ public class WordCount {
 				word.set(tokenize.nextToken().toLowerCase());			
 				context.write(word, one);
 			}
+		
+		
 			
 		}
 
+
+		@Override
+		protected void cleanup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+				throws IOException, InterruptedException {
+			log.info("----------------> cleanup() called");
+		}
+
+		//run 은 보통 오버라이드를 하지 않음
+		/*	@Override
+				public void run(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+						throws IOException, InterruptedException {
+					// TODO Auto-generated method stub
+					super.run(context);
+				}
+		*/
+		
 	}
 	
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
