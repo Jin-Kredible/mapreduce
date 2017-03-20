@@ -40,4 +40,10 @@ public class Numberwritable implements Writable {
 		WritableUtils.writeVLong(out, number);
 	}
 
+	@Override
+	public String toString() {
+		return String.valueOf(number);
+	}
+
+	
 }
