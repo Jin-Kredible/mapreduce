@@ -4,7 +4,7 @@ import java.io.*;
 
 import org.apache.hadoop.io.*;
 
-public class StringWritable implements WritableComparable<String> {
+public class StringWritable implements WritableComparable<StringWritable> {
 
 	
 	private String value;
@@ -12,6 +12,10 @@ public class StringWritable implements WritableComparable<String> {
 	
 	public void set(String value) {
 		this.value = value;
+	}
+	
+	public String get() {
+		return this.value;
 	}
 	
 	@Override
@@ -27,8 +31,8 @@ public class StringWritable implements WritableComparable<String> {
 	}
 
 	@Override
-	public int compareTo(String arg0) {
-		return value.compareTo(arg0);
+	public int compareTo(StringWritable arg0) {
+		return value.compareTo(arg0.get());
 	}
 
 	@Override
