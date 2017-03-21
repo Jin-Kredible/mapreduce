@@ -17,6 +17,8 @@ import com.bit2017.mapreduce.io.*;
 
 public class WordCount {
 	
+	Configuration conf = new Configuration();
+	
 	private static Log log = LogFactory.getLog(WordCount.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
@@ -36,10 +38,12 @@ public class WordCount {
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("-------------> map() called");
+			Configuration conf = context.getConfiguration();
+			String search = conf.get("SearchText");
 			String line = value.toString();
 			
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-			while(tokenize.hasMoreTokens()) {
+			while(line.contains(search)) {
 			
 				word.set(tokenize.nextToken().toLowerCase());			
 				context.write(word, one);
@@ -111,6 +115,8 @@ public class WordCount {
 		//3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		
+		job.setNumReduceTasks(2);
+		
 		//4. 출력키 타입
 		job.setMapOutputKeyClass(StringWritable.class);
 		
@@ -130,6 +136,7 @@ public class WordCount {
 		//9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
+		conf.set("SearchText", args[2]);
 		
 		//10. 실행
 		job.waitForCompletion(true);
