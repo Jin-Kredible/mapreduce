@@ -77,8 +77,15 @@ public class WordCount {
 			for(Numberwritable value : values) {
 				sum += value.get();
 			}
+			
+			long unique = 0;
+			for(Numberwritable value : values) {
+				unique +=value.get();
+			}
+			
 			sumWritable.set(sum);
 			context.getCounter("Words Status", "Count of all Words").increment(sum);
+			context.getCounter("Words Status", "Count unique words").increment(unique);
 			context.write(key, sumWritable);
 			
 		}
