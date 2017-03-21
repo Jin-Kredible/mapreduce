@@ -73,17 +73,17 @@ public class WordCount {
 		protected void reduce(StringWritable key, Iterable<Numberwritable> values,
 				Reducer<StringWritable, Numberwritable, StringWritable, Numberwritable>.Context context) throws IOException, InterruptedException {
 				
-			//long sum =0;
-			//for(Numberwritable value : values) {
-			//	sum += value.get();
-			//}
+			long sum =0;
+			for(Numberwritable value : values) {
+				sum += value.get();
+			}
 			
 			long unique = 0;
 			for(Numberwritable value : values) {
 				unique +=value.get();
 			}
 			
-			//sumWritable.set(sum);
+			sumWritable.set(sum);
 			sumWritable.set(unique);
 			//context.getCounter("Words Status", "Count of all Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
