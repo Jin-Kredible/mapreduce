@@ -39,13 +39,13 @@ public class WordCount {
 				throws IOException, InterruptedException {
 			log.info("-------------> map() called");
 			Configuration conf = context.getConfiguration();
-			CharSequence search = conf.get("SearchText");
+			String search = conf.get("SearchText");
 			String line = value.toString();
 			
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
-			
-			while(line.contains(search)) {
+			log.info("----------->tokenize worked");
+			while(line.contains((CharSequence)search)) {
 			
 				word.set(tokenize.nextToken().toLowerCase());			
 				context.write(word, one);
