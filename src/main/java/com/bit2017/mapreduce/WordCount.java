@@ -107,9 +107,13 @@ public class WordCount {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
 		
-		Job job = new Job(conf, "WordCount");
 		
 		conf.set("SearchText", args[2].toString());
+		
+		
+		Job job = new Job(conf, "WordCount");
+		
+		
 		
 		log.info("args 2 ---------------------->" + args[2]);
 		// 1. Job instance 초기화 과정
