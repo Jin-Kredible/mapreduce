@@ -18,7 +18,6 @@ import com.bit2017.mapreduce.io.*;
 public class WordCount {
 	
 	private static Log log = LogFactory.getLog(WordCount.class);
-	private static String value;
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
 		
@@ -85,6 +84,7 @@ public class WordCount {
 			for(Numberwritable value : values) {
 				unique +=1;
 				log.info("------------>" + unique);
+				return;
 			}
 			
 			/*sumWritable.set(sum);*/
@@ -128,7 +128,7 @@ public class WordCount {
 		//8.입력파일 이름 지정
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		
-		//9.출력 디렉토리 지정
+		//9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		
