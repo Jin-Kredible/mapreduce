@@ -108,6 +108,8 @@ public class WordCount {
 		Job job = new Job(conf, "WordCount");
 		
 		conf.set("SearchText", args[2].toString());
+		
+		log.info("args 2 ---------------------->" + args[2]);
 		// 1. Job instance 초기화 과정
 		job.setJarByClass(WordCount.class);
 		
