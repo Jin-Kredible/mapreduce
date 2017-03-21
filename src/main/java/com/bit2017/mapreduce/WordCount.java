@@ -19,13 +19,13 @@ public class WordCount {
 	
 	private static Log log = LogFactory.getLog(WordCount.class);
 	
-	public static class MyMapper extends Mapper<LongWritable, Text, Text, Numberwritable> {
+	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
 		
-		private Text word = new Text();
+		private StringWritable word = new StringWritable();
 		Numberwritable one = new Numberwritable(1L);
 
 		@Override
-		protected void setup(Mapper<LongWritable, Text, Text, Numberwritable>.Context context)
+		protected void setup(Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("------> setup() called");
 		}
@@ -33,7 +33,7 @@ public class WordCount {
 
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, Numberwritable>.Context context)
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("-------------> map() called");
 			String line = value.toString();
@@ -49,7 +49,7 @@ public class WordCount {
 
 
 		@Override
-		protected void cleanup(Mapper<LongWritable, Text, Text, Numberwritable>.Context context)
+		protected void cleanup(Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("----------------> cleanup() called");
 		}
@@ -99,7 +99,7 @@ public class WordCount {
 		job.setReducerClass(MyReducer.class);
 		
 		//4. 출력키 타입
-		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputKeyClass(StringWritable.class);
 		
 		//5. 출력밸류 타입
 		job.setMapOutputValueClass(Numberwritable.class);
