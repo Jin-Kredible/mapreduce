@@ -44,12 +44,12 @@ public class WordCount {
 			
 			log.info("search----------------->" + search);
 			
-			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
+			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
 			
 			log.info("----------->tokenize worked");
 			while(line.contains((CharSequence)search)) {
 			
-				word.set(tokenize.nextToken().toLowerCase());			
+				/*word.set(tokenize.nextToken().toLowerCase());	*/		
 				context.write(word, one);
 			}
 
