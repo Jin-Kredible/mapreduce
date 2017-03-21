@@ -50,6 +50,7 @@ public class WordCount {
 			while(line.contains(search)) {
 			log.info("came into for loops ---------->");
 				/*word.set(tokenize.nextToken().toLowerCase());	*/		
+				word.set(line);
 				context.write(word, one);
 			}
 
