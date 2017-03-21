@@ -42,7 +42,7 @@ public class Numberwritable implements Writable {
 
 	@Override
 	public String toString() {
-		return String.valueOf(number);
+		return number.toString();
 	}
 
 	
