@@ -105,7 +105,7 @@ public class WordCount {
 		
 		Job job = new Job(conf, "WordCount");
 		
-		
+		conf.set("SearchText", args[2]);
 		// 1. Job instance 초기화 과정
 		job.setJarByClass(WordCount.class);
 		
@@ -136,7 +136,7 @@ public class WordCount {
 		//9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
-		conf.set("SearchText", args[2]);
+		
 		
 		//10. 실행
 		job.waitForCompletion(true);
