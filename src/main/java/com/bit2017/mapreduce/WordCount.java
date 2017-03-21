@@ -65,13 +65,13 @@ public class WordCount {
 		
 	}
 	
-	public static class MyReducer extends Reducer<Text, Numberwritable, Text, Numberwritable> {
+	public static class MyReducer extends Reducer<StringWritable, Numberwritable, StringWritable, Numberwritable> {
 		
 		private Numberwritable sumWritable = new Numberwritable();
 		
 		@Override
-		protected void reduce(Text key, Iterable<Numberwritable> values,
-				Reducer<Text, Numberwritable, Text, Numberwritable>.Context context) throws IOException, InterruptedException {
+		protected void reduce(StringWritable key, Iterable<Numberwritable> values,
+				Reducer<StringWritable, Numberwritable, StringWritable, Numberwritable>.Context context) throws IOException, InterruptedException {
 				
 			long sum =0;
 			for(Numberwritable value : values) {
