@@ -22,7 +22,7 @@ public class Numberwritable implements Writable {
 		return number;
 	}
 	
-	public void set(Long sum) {
+	public void set(Long number) {
 		this.number = number;
 	}
 	
@@ -42,7 +42,7 @@ public class Numberwritable implements Writable {
 
 	@Override
 	public String toString() {
-		return number.toString();
+		return String.valueOf(number);
 	}
 
 	
