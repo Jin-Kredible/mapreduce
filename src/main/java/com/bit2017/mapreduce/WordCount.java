@@ -84,7 +84,7 @@ public class WordCount {
 			}
 			
 			sumWritable.set(sum);
-			context.getCounter("Words Status", "Count of all Words").increment(sum);
+			//context.getCounter("Words Status", "Count of all Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
 			context.write(key, sumWritable);
 			
