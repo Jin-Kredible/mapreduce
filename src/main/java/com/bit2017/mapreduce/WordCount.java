@@ -47,7 +47,7 @@ public class WordCount {
 			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
 			
 		/*	log.info("----------->tokenize worked");*/
-			while(line.contains((CharSequence)search)) {
+			while(line.contains(search)) {
 			log.info("came into for loops ---------->");
 				/*word.set(tokenize.nextToken().toLowerCase());	*/		
 				context.write(word, one);
