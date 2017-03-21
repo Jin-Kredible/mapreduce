@@ -18,6 +18,7 @@ import com.bit2017.mapreduce.io.*;
 public class WordCount {
 	
 	private static Log log = LogFactory.getLog(WordCount.class);
+	private static String value;
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
 		
@@ -37,6 +38,7 @@ public class WordCount {
 				throws IOException, InterruptedException {
 			log.info("-------------> map() called");
 			String line = value.toString();
+			
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()) {
 			
@@ -128,6 +130,7 @@ public class WordCount {
 		
 		//9.출력 디렉토리 지정
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		
 		
 		//10. 실행
 		job.waitForCompletion(true);
