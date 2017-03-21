@@ -37,7 +37,7 @@ public class WordCount {
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
 				throws IOException, InterruptedException {
-			log.info("-------------> map() called");
+			/*log.info("-------------> map() called");*/
 			Configuration conf = context.getConfiguration();
 			String search = conf.get("SearchText");
 			String line = value.toString();
@@ -46,9 +46,9 @@ public class WordCount {
 			
 			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
 			
-			log.info("----------->tokenize worked");
+		/*	log.info("----------->tokenize worked");*/
 			while(line.contains((CharSequence)search)) {
-			
+			log.info("came into for loops ---------->");
 				/*word.set(tokenize.nextToken().toLowerCase());	*/		
 				context.write(word, one);
 			}
