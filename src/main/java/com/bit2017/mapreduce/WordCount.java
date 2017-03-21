@@ -42,7 +42,7 @@ public class WordCount {
 			String search = conf.get("SearchText");
 			String line = value.toString();
 			
-			log.info("conf----------------->" + conf);
+			log.info("search----------------->" + search);
 			
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
