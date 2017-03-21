@@ -76,6 +76,7 @@ public class WordCount {
 			long sum =0;
 			for(Numberwritable value : values) {
 				sum += value.get();
+				log.info("------------>" + sum);
 			}
 			
 			long unique = 0;
