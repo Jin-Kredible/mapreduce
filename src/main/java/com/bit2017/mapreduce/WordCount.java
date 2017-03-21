@@ -81,10 +81,9 @@ public class WordCount {
 			}*/
 			
 			long unique = 0;
-			for(Numberwritable value : values) {
+			for(int i=0; i<1; i++) {
 				unique +=1;
 				log.info("------------>" + unique);
-				return;
 			}
 			
 			/*sumWritable.set(sum);*/
