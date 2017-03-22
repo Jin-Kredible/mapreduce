@@ -104,7 +104,7 @@ public class BasicWordCount {
 		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job.setInputFormatClass(TextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(TextOutputFormat.class);
