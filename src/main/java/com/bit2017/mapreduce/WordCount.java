@@ -42,17 +42,18 @@ public class WordCount {
 			String search = conf.get("SearchText");
 			String line = value.toString();
 			
+			log.info("line -----------------> " + line);
 			log.info("search----------------->" + search);
 			
 			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
 			
 		/*	log.info("----------->tokenize worked");*/
-			while(line.contains(search)) {
-			log.info("came into for loops ---------->");
-				/*word.set(tokenize.nextToken().toLowerCase());	*/		
+			/*if(line.contains(search)) {
+				log.info("came into for loops ---------->");
+				word.set(tokenize.nextToken().toLowerCase());			
 				word.set(line);
 				context.write(word, one);
-			}
+			}*/
 
 			
 		}
