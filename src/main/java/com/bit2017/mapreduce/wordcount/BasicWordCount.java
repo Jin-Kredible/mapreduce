@@ -15,8 +15,6 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class BasicWordCount {
 	
-	Configuration conf = new Configuration();
-	
 	private static Log log = LogFactory.getLog(WordCount.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
@@ -87,7 +85,7 @@ public class BasicWordCount {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
 		
-		Job job = new Job(conf, "WordCount");
+		Job job = new Job(conf, "BasicWordCount");
 		// 1. Job instance 초기화 과정
 		job.setJarByClass(BasicWordCount.class);
 		
