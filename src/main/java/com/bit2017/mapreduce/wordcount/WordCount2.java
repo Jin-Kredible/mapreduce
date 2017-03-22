@@ -90,7 +90,7 @@ public class WordCount2 {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
 		
-		Job job = new Job(conf, "WordCount");
+		Job job = new Job(conf, "WordCount2");
 		// 1. Job instance 초기화 과정
 		job.setJarByClass(WordCount2.class);
 		
@@ -107,7 +107,7 @@ public class WordCount2 {
 		job.setMapOutputValueClass(Numberwritable.class);
 		
 		//6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job.setInputFormatClass(TextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(TextOutputFormat.class);
