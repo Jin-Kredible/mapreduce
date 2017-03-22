@@ -38,9 +38,7 @@ public class WordCount3 {
 			
 				word.set(tokenize.nextToken().toLowerCase());			
 				context.write(word, one);
-			}
-
-			
+			}	
 		}
 
 
