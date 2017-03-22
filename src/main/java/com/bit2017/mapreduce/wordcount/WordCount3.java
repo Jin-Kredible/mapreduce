@@ -1,4 +1,4 @@
-package com.bit2017.mapreduce;
+package com.bit2017.mapreduce.wordcount;
 import java.io.*;
 import java.util.*;
 
@@ -10,10 +10,11 @@ import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 
-import com.bit2017.mapreduce.WordCount.*;
 import com.bit2017.mapreduce.io.*;
+import com.bit2017.mapreduce.wordcount.*;
+import com.bit2017.mapreduce.wordcount.WordCount.*;
 
-public class WordCount2 {
+public class WordCount3 {
 private static Log log = LogFactory.getLog(WordCount.class);
 	
 	public static class MyMapper extends Mapper<Text, Text, StringWritable, Numberwritable> {
@@ -99,7 +100,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		
 		
 		// 1. Job instance 초기화 과정
-		job.setJarByClass(WordCount.class);
+		job.setJarByClass(WordCount3.class);
 		
 		//2. 맵퍼 클래스 지정
 		job.setMapperClass(MyMapper.class);
