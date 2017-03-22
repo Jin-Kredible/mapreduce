@@ -15,7 +15,6 @@ import com.bit2017.mapreduce.wordcount.*;
 import com.bit2017.mapreduce.wordcount.SearchText.*;
 
 public class WordCount3 {
-private static Log log = LogFactory.getLog(SearchText.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		
@@ -33,7 +32,6 @@ private static Log log = LogFactory.getLog(SearchText.class);
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			log.info("-------------> map() called");
 			String line = value.toString();
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			while(tokenize.hasMoreTokens()) {
@@ -74,7 +72,6 @@ private static Log log = LogFactory.getLog(SearchText.class);
 			long sum =0;
 			for(LongWritable value : values) {
 				sum += value.get();
-				log.info("------------>" + sum);
 			}
 
 			
@@ -101,6 +98,9 @@ private static Log log = LogFactory.getLog(SearchText.class);
 		
 		//3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
+		
+		//리듀스 개수 지정
+		job.setNumReduceTasks(2);
 		
 /*		job.setCombinerClass(MyReducer.class);*/
 		
