@@ -47,13 +47,16 @@ public class WordCount {
 			
 			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
 			
-		/*	log.info("----------->tokenize worked");*/
-			/*if(line.contains(search)) {
+			
+			CharSequence chars = search;
+			
+			/*	log.info("----------->tokenize worked");*/
+			if(line.contains(chars)) {
 				log.info("came into for loops ---------->");
-				word.set(tokenize.nextToken().toLowerCase());			
+				/*word.set(tokenize.nextToken().toLowerCase());	*/		
 				word.set(line);
 				context.write(word, one);
-			}*/
+			}
 
 			
 		}
