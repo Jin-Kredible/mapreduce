@@ -19,7 +19,7 @@ public class WordCount2 {
 	
 	Configuration conf = new Configuration();
 	
-	private static Log log = LogFactory.getLog(WordCount.class);
+	private static Log log = LogFactory.getLog(SearchText.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
 		

@@ -12,26 +12,26 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 import com.bit2017.mapreduce.io.*;
 import com.bit2017.mapreduce.wordcount.*;
-import com.bit2017.mapreduce.wordcount.WordCount.*;
+import com.bit2017.mapreduce.wordcount.SearchText.*;
 
 public class WordCount3 {
-private static Log log = LogFactory.getLog(WordCount.class);
+private static Log log = LogFactory.getLog(SearchText.class);
 	
-	public static class MyMapper extends Mapper<Text, Text, StringWritable, Numberwritable> {
+	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		
-		private StringWritable word = new StringWritable();
-		Numberwritable one = new Numberwritable(1L);
+		private Text word = new Text();
+		LongWritable one = new LongWritable(1L);
 
-		@Override
-		protected void setup(Mapper<Text, Text, StringWritable, Numberwritable>.Context context)
+/*		@Override
+		protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("------> setup() called");
-		}
+		}*/
 
 
 
 		@Override
-		protected void map(Text key, Text value, Mapper<Text, Text, StringWritable, Numberwritable>.Context context)
+		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("-------------> map() called");
 			String line = value.toString();
@@ -47,7 +47,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 
 
 	/*	@Override
-		protected void cleanup(Mapper<LongWritable, Text, StringWritable, Numberwritable>.Context context)
+		protected void cleanup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("----------------> cleanup() called");
 		}*/
@@ -63,30 +63,24 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		
 	}
 	
-	public static class MyReducer extends Reducer<StringWritable, Numberwritable, StringWritable, Numberwritable> {
+	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
 		
-		private Numberwritable sumWritable = new Numberwritable();
+		private LongWritable sumWritable = new LongWritable();
 		
 		@Override
-		protected void reduce(StringWritable key, Iterable<Numberwritable> values,
-				Reducer<StringWritable, Numberwritable, StringWritable, Numberwritable>.Context context) throws IOException, InterruptedException {
+		protected void reduce(Text key, Iterable<LongWritable> values,
+				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
 				
 			long sum =0;
-			for(Numberwritable value : values) {
+			for(LongWritable value : values) {
 				sum += value.get();
 				log.info("------------>" + sum);
 			}
-			
-			long unique = 0;
-			for(Numberwritable value : values) {
-				unique +=value.get();
-				log.info("------------>" + unique);
-			}
+
 			
 			sumWritable.set(sum);
-			sumWritable.set(unique);
-			//context.getCounter("Words Status", "Count of all Words").increment(sum);
-			context.getCounter("Words Status", "Count unique words").increment(unique);
+			context.getCounter("Words Status", "Count of all Words").increment(sum);
+			context.getCounter("Words Status", "Count unique words").increment(1);
 			
 			context.write(key, sumWritable);
 			
@@ -96,7 +90,7 @@ private static Log log = LogFactory.getLog(WordCount.class);
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
 		
-		Job job = new Job(conf, "WordCount");
+		Job job = new Job(conf, "WordCount3");
 		
 		
 		// 1. Job instance 초기화 과정
@@ -108,16 +102,16 @@ private static Log log = LogFactory.getLog(WordCount.class);
 		//3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		
-		job.setCombinerClass(MyReducer.class);
+/*		job.setCombinerClass(MyReducer.class);*/
 		
 		//4. 출력키 타입
-		job.setMapOutputKeyClass(StringWritable.class);
+		job.setMapOutputKeyClass(Text.class);
 		
 		//5. 출력밸류 타입
-		job.setMapOutputValueClass(Numberwritable.class);
+		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job.setInputFormatClass(TextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(TextOutputFormat.class);

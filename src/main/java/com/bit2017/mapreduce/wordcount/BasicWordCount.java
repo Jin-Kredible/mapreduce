@@ -15,7 +15,7 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class BasicWordCount {
 	
-	private static Log log = LogFactory.getLog(WordCount.class);
+	private static Log log = LogFactory.getLog(SearchText.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		

@@ -15,11 +15,11 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 import com.bit2017.mapreduce.io.*;
 
-public class WordCount {
+public class SearchText {
 	
 	Configuration conf = new Configuration();
 	
-	private static Log log = LogFactory.getLog(WordCount.class);
+	private static Log log = LogFactory.getLog(SearchText.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, Numberwritable> {
 		
@@ -122,7 +122,7 @@ public class WordCount {
 		
 		log.info("args 2 ---------------------->" + args[2]);
 		// 1. Job instance 초기화 과정
-		job.setJarByClass(WordCount.class);
+		job.setJarByClass(SearchText.class);
 		
 		//2. 맵퍼 클래스 지정
 		job.setMapperClass(MyMapper.class);
