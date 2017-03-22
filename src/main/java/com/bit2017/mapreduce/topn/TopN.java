@@ -76,7 +76,7 @@ public class TopN {
 				Long sum =0L;
 				for(LongWritable values : value) {
 					sum += values.get();
-				}
+				}	
 				
 				ItemFreq newItemFreq = new ItemFreq();
 				newItemFreq.setItem(key.toString());
