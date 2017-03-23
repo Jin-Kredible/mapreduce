@@ -28,6 +28,10 @@ public class Trigram {
 			
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
+			if(tokenize.countTokens() <3) {
+				return;
+			}
+			
 			String firstWord = tokenize.nextToken();
 			Log.info("frist word " +firstWord);
 			String secondWord = tokenize.nextToken();
