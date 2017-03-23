@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
+import org.mortbay.log.Log;
 
 public class TopN {
 
@@ -35,6 +36,7 @@ public class TopN {
 				ItemFreq newItemFreq = new ItemFreq();
 				newItemFreq.setItem(key.toString());
 				newItemFreq.setFreq(Long.parseLong(value.toString()));
+				
 				
 				ItemFreq head = pq.peek();
 				if( pq.size() <topN|| head.getFreq()< newItemFreq.getFreq()) {

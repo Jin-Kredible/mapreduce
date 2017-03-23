@@ -47,7 +47,7 @@ public class SearchDocs {
 			log.info("line -----------------> " + line);
 			log.info("search----------------->" + search);
 
-			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
+			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			int count1 =0;
 			while (tokenize.hasMoreTokens()) {
 				String saveToken = tokenize.nextToken();
@@ -58,7 +58,22 @@ public class SearchDocs {
 					count1+=1;
 					context.write(key, new LongWritable(count1));
 				}
+			}*/
+			
+			int lastIndex = 0;
+			int count = 0;
+
+			while(lastIndex != -1){
+
+			    lastIndex = line.indexOf(search,lastIndex);
+
+			    if(lastIndex != -1){
+			        count ++;
+			        lastIndex += search.length();
+			    }
 			}
+			log.info("key -----------> " + key + "....count -------------->" + count);
+			context.write(key, new LongWritable(count));
 		}
 	}
 
