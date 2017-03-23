@@ -102,10 +102,10 @@ public class SearchDocs {
 		job.setReducerClass(MyReducer.class);
 
 		// 4. 출력키 타입
-		job.setMapOutputKeyClass(LongWritable.class);
+		job.setMapOutputKeyClass(Text.class);
 
 		// 5. 출력밸류 타입
-		job.setMapOutputValueClass(Text.class);
+		job.setMapOutputValueClass(LongWritable.class);
 
 		// 6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
