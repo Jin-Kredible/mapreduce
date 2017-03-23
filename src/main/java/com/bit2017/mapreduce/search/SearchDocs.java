@@ -172,7 +172,9 @@ public class SearchDocs {
 		
 		
 
-		job2.waitForCompletion(true);
+		if (job2.waitForCompletion(true) == false) {
+			return;
+		}
 		
 		
 		Configuration conf3 = new Configuration();
@@ -197,7 +199,7 @@ public class SearchDocs {
 		FileOutputFormat.setOutputPath(job3, new Path(OUTPUT_DIR));
 
 		// 10. 실행
-		job.waitForCompletion(true);
+		job3.waitForCompletion(true);
 
 	}
 }
