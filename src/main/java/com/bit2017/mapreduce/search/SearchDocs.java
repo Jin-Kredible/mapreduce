@@ -1,6 +1,7 @@
 package com.bit2017.mapreduce.search;
 
 import java.io.*;
+import java.util.*;
 
 import org.apache.commons.logging.*;
 import org.apache.hadoop.conf.*;
@@ -23,13 +24,13 @@ public class SearchDocs {
 	
 	private static Log log = LogFactory.getLog(SearchText.class);
 	
-	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+	public static class MyMapper extends Mapper<Text, Text, Text, LongWritable> {
 		
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1L);
 
 		@Override
-		protected void setup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+		protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			log.info("------> setup() called");
 		}
@@ -37,7 +38,7 @@ public class SearchDocs {
 
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			/*log.info("-------------> map() called");*/
 			Configuration conf = context.getConfiguration();
@@ -47,38 +48,18 @@ public class SearchDocs {
 			log.info("line -----------------> " + line);
 			log.info("search----------------->" + search);
 			
-			/*StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");*/
+			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
-			
-			CharSequence chars = search;
 			
 			/*	log.info("----------->tokenize worked");*/
-			if(line.contains(chars)) {
-				log.info("came into for loops ---------->");
-				/*word.set(tokenize.nextToken().toLowerCase());	*/		
-				word.set(line);
-				context.write(word, one);
+			while(tokenize.hasMoreTokens()) {
+				if(tokenize.nextToken()==search) {
+					log.info("came into for loops ---------->");
+					word.set(tokenize.nextToken().toLowerCase());
+					context.write(word, one);
 			}
-
-			
+			}
 		}
-
-
-		@Override
-		protected void cleanup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info("----------------> cleanup() called");
-		}
-
-		//run 은 보통 오버라이드를 하지 않음
-		/*	@Override
-				public void run(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
-						throws IOException, InterruptedException {
-					// TODO Auto-generated method stub
-					super.run(context);
-				}
-		*/
-		
 	}
 	
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, Text> {
@@ -88,20 +69,12 @@ public class SearchDocs {
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Reducer<Text, LongWritable, Text, Text>.Context context) throws IOException, InterruptedException {
-				
-		/*	long sum =0;
-			for(Numberwritable value : values) {
-				sum += value.get();
-				log.info("------------>" + sum);
-			}*/
 			
 			long unique = 0;
 			for(int i=0; i<1; i++) {
 				unique +=1;
 				log.info("------------>" + unique);
 			}
-			
-			/*sumWritable.set(sum);*/
 			sumWritable.set(unique);
 			//context.getCounter("Words Status", "Count of all Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
@@ -139,7 +112,7 @@ public class SearchDocs {
 		job.setMapOutputValueClass(Text.class);
 		
 		//6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(TextInputFormat.class);
+		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(TextOutputFormat.class);
@@ -186,7 +159,9 @@ public class SearchDocs {
 		// 9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/topN"));
 		
-		job2.waitForCompletion(true);
+		if (job2.waitForCompletion(true) == false) {
+			return;
+		}
 		
 		Job job3 = new Job(conf, "Join ID & Title");
 		// 1. Job instance 초기화 과정
