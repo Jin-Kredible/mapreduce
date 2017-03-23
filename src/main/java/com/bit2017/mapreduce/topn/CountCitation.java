@@ -29,24 +29,7 @@ public class CountCitation {
 			context.write(word, one);
 		}
 	}
-	
-	public static class MyMapper2 extends Mapper<Text, Text, Text, LongWritable> {
 
-		private Text word = new Text();
-		LongWritable one = new LongWritable(1L);
-
-		@Override
-		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
-				throws IOException, InterruptedException {
-			/* log.info("-------------> map() called"); */
-			String line = value.toString();
-
-			/* log.info("----------->tokenize worked"); */
-			word.set(line);
-			context.write(word, one);
-		}
-
-	}
 
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
 
@@ -119,10 +102,10 @@ public class CountCitation {
 
 		job2.setJarByClass(TopN.class);
 
-		job.setMapperClass(MyMapper2.class);
+		job.setMapperClass(TopN.MyMapper.class);
 
 		// 3. 리듀서 클래스 지정
-		job.setReducerClass(MyReducer.class);
+		job.setReducerClass(TopN.MyReducer.class);
 
 		// 4. 출력키 타입
 		job.setMapOutputKeyClass(Text.class);
