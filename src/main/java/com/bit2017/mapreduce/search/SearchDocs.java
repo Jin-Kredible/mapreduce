@@ -48,14 +48,15 @@ public class SearchDocs {
 
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
-			
+			int count1 = 0;
 			while (tokenize.hasMoreTokens()) {
 				String saveToken = tokenize.nextToken();
 				log.info("----------->tokenize worked");
 				if (saveToken.equals(search)) {
 					log.info("came into for loops ---------->");
 					word.set(saveToken.toLowerCase());
-					context.write(key, one);
+					count1+=1;
+					context.write(key, new LongWritable(count1));
 				}
 			}
 		}
