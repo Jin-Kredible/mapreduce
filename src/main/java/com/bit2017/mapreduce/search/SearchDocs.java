@@ -173,8 +173,10 @@ public class SearchDocs {
 		
 
 		job2.waitForCompletion(true);
-
-		Job job3 = new Job(conf, "Join ID & Title");
+		
+		
+		Configuration conf3 = new Configuration();
+		Job job3 = new Job(conf3, "Join ID & Title");
 		// 1. Job instance 초기화 과정
 		job3.setJarByClass(JoinIDTitle.class);
 
