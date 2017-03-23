@@ -10,6 +10,7 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
+import org.mortbay.log.Log;
 
 public class Trigram {
 	
@@ -28,7 +29,9 @@ public class Trigram {
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
 			String firstWord = tokenize.nextToken();
+			Log.info(firstWord);
 			String secondWord = tokenize.nextToken();
+			Log.info(secondWord);
 			
 			while(tokenize.hasMoreTokens()) {
 				String thirdWord = tokenize.nextToken();
