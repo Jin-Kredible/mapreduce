@@ -11,10 +11,7 @@ import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
 
-import com.bit2017.mapreduce.wordcount.*;
-
 public class Trigram {
-	private static Log log = LogFactory.getLog(SearchText.class);
 	
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		
