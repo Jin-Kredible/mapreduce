@@ -29,9 +29,9 @@ public class Trigram {
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
 			
 			String firstWord = tokenize.nextToken();
-			Log.info(firstWord);
+			Log.info("frist word " +firstWord);
 			String secondWord = tokenize.nextToken();
-			Log.info(secondWord);
+			Log.info("second word " + secondWord);
 			
 			while(tokenize.hasMoreTokens()) {
 				String thirdWord = tokenize.nextToken();
@@ -40,11 +40,7 @@ public class Trigram {
 				
 				firstWord = secondWord;
 				secondWord = thirdWord;
-			}
-			
-			return;
-
-			
+			}		
 		}
 
 
