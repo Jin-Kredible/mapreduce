@@ -31,13 +31,13 @@ public class CountCitation {
 	}
 
 
-	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+	public static class MyReducer extends Reducer<Text, LongWritable, Text, Text> {
 
 		private LongWritable sumWritable = new LongWritable();
 
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
-				Reducer<Text, LongWritable, Text, LongWritable>.Context context)
+				Reducer<Text, LongWritable, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
 			/*
@@ -56,7 +56,7 @@ public class CountCitation {
 			// Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
 
-			context.write(key, sumWritable);
+			context.write(key, new Text(sumWritable.toString()));
 
 		}
 	}
