@@ -102,22 +102,22 @@ public class CountCitation {
 
 		job2.setJarByClass(TopN.class);
 
-		job.setMapperClass(TopN.MyMapper.class);
+		job2.setMapperClass(TopN.MyMapper.class);
 
 		// 3. 리듀서 클래스 지정
-		job.setReducerClass(TopN.MyReducer.class);
+		job2.setReducerClass(TopN.MyReducer.class);
 
 		// 4. 출력키 타입
-		job.setMapOutputKeyClass(Text.class);
+		job2.setMapOutputKeyClass(Text.class);
 
 		// 5. 출력밸류 타입
-		job.setMapOutputValueClass(LongWritable.class);
+		job2.setMapOutputValueClass(LongWritable.class);
 
 		// 6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job2.setInputFormatClass(KeyValueTextInputFormat.class);
 
 		// 7. 출력파일 포맷 지정(생략 가능)
-		job.setOutputFormatClass(TextOutputFormat.class);
+		job2.setOutputFormatClass(TextOutputFormat.class);
 
 		// 8.입력파일 이름 지정
 		FileInputFormat.addInputPath(job2, new Path(args[1]));
