@@ -194,8 +194,8 @@ public class SearchDocs {
 
 		// 파라미터 저장
 		final String SEARCHDOC_TOPN = args[1] + "/topN";
-		final String TITLE_ID = args[2];
-		final String OUTPUT_DIR = args[3];
+		final String TITLE_ID = args[3];
+		final String OUTPUT_DIR = args[4];
 
 		/* 입력 관련 */
 		MultipleInputs.addInputPath(job3, new Path(SEARCHDOC_TOPN), KeyValueTextInputFormat.class, TitleDocIdMapper.class );
