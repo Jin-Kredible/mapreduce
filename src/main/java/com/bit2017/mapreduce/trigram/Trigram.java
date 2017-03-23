@@ -39,7 +39,9 @@ public class Trigram {
 				context.write(word, one);
 				
 				firstWord = secondWord;
+				Log.info("first word" + firstWord);
 				secondWord = thirdWord;
+				Log.info("second word" + secondWord);
 			}		
 		}
 
