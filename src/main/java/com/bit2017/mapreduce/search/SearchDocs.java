@@ -51,7 +51,7 @@ public class SearchDocs {
 			
 			while (tokenize.hasMoreTokens()) {
 				log.info("----------->tokenize worked");
-				if (tokenize.nextToken() == search) {
+				if (tokenize.nextToken().equals(search)) {
 					log.info("came into for loops ---------->");
 					word.set(tokenize.nextToken().toLowerCase());
 					context.write(word, one);
