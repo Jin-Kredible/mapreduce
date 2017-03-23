@@ -144,6 +144,8 @@ public class SearchDocs {
 		Job job2 = new Job(conf2, "Top N");
 
 		job2.setJarByClass(TopN.class);
+		
+		job.getConfiguration().setInt("topN", Integer.parseInt(args[5]));
 
 		job2.setMapperClass(TopN.MyMapper.class);
 
@@ -167,6 +169,8 @@ public class SearchDocs {
 
 		// 9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/topN"));
+		
+		
 
 		job2.waitForCompletion(true);
 
