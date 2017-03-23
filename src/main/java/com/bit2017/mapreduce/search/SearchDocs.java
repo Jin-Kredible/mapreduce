@@ -19,13 +19,13 @@ import com.bit2017.mapreduce.wordcount.*;
 import com.bit2017.mapreduce.wordcount.SearchText.*;
 
 public class SearchDocs {
-	
+
 	Configuration conf = new Configuration();
-	
+
 	private static Log log = LogFactory.getLog(SearchText.class);
-	
+
 	public static class MyMapper extends Mapper<Text, Text, Text, LongWritable> {
-		
+
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1L);
 
@@ -35,97 +35,90 @@ public class SearchDocs {
 			log.info("------> setup() called");
 		}
 
-
-
 		@Override
 		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			/*log.info("-------------> map() called");*/
+			/* log.info("-------------> map() called"); */
 			Configuration conf = context.getConfiguration();
 			String search = conf.get("SearchText");
 			String line = value.toString();
-			
+
 			log.info("line -----------------> " + line);
 			log.info("search----------------->" + search);
-			
+
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
+
 			
-			
-			/*	log.info("----------->tokenize worked");*/
-			while(tokenize.hasMoreTokens()) {
-				if(tokenize.nextToken()==search) {
+			while (tokenize.hasMoreTokens()) {
+				log.info("----------->tokenize worked");
+				if (tokenize.nextToken() == search) {
 					log.info("came into for loops ---------->");
 					word.set(tokenize.nextToken().toLowerCase());
 					context.write(word, one);
-			}
+				}
 			}
 		}
 	}
-	
+
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, Text> {
-		
+
 		private LongWritable sumWritable = new LongWritable();
-		
+
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Reducer<Text, LongWritable, Text, Text>.Context context) throws IOException, InterruptedException {
-			
+
 			long unique = 0;
-			for(int i=0; i<1; i++) {
-				unique +=1;
+			for (int i = 0; i < 1; i++) {
+				unique += 1;
 				log.info("------------>" + unique);
 			}
 			sumWritable.set(unique);
-			//context.getCounter("Words Status", "Count of all Words").increment(sum);
+			// context.getCounter("Words Status", "Count of all
+			// Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
 			
+
 			context.write(key, new Text(sumWritable.toString()));
-			
+
 		}
 	}
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
-		
-		
+
 		conf.set("SearchText", args[2].toString());
-		
-		
+
 		Job job = new Job(conf, "Search Docs");
-		
-		
-		
+
 		log.info("args 2 ---------------------->" + args[2]);
 		// 1. Job instance 초기화 과정
 		job.setJarByClass(SearchDocs.class);
-		
-		//2. 맵퍼 클래스 지정
+
+		// 2. 맵퍼 클래스 지정
 		job.setMapperClass(MyMapper.class);
-		
-		//3. 리듀서 클래스 지정
+
+		// 3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
-		
-		//4. 출력키 타입
+
+		// 4. 출력키 타입
 		job.setMapOutputKeyClass(LongWritable.class);
-		
-		//5. 출력밸류 타입
+
+		// 5. 출력밸류 타입
 		job.setMapOutputValueClass(Text.class);
-		
-		//6. 입력파일 포맷 지정(생략)
+
+		// 6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
-		
-		//7. 출력파일 포맷 지정(생략 가능)
+
+		// 7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(TextOutputFormat.class);
-		
-		
-		//8.입력파일 이름 지정
+
+		// 8.입력파일 이름 지정
 		FileInputFormat.addInputPath(job, new Path(args[0]));
-		
-		//9.출력 디렉토리 지정gg
+
+		// 9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		
-		
-		
+
 		// 10. 실행
 		if (job.waitForCompletion(true) == false) {
 			return;
@@ -158,11 +151,11 @@ public class SearchDocs {
 
 		// 9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/topN"));
-		
+
 		if (job2.waitForCompletion(true) == false) {
 			return;
 		}
-		
+
 		Job job3 = new Job(conf, "Join ID & Title");
 		// 1. Job instance 초기화 과정
 		job3.setJarByClass(JoinIDTitle.class);
@@ -173,8 +166,9 @@ public class SearchDocs {
 		final String OUTPUT_DIR = args[4];
 
 		/* 입력 관련 */
-		MultipleInputs.addInputPath(job3, new Path(SEARCHDOC_TOPN), KeyValueTextInputFormat.class, TitleDocIdMapper.class );
-		MultipleInputs.addInputPath(job3, new Path(TITLE_ID), KeyValueTextInputFormat.class, DocIdCountMapper.class  );
+		MultipleInputs.addInputPath(job3, new Path(SEARCHDOC_TOPN), KeyValueTextInputFormat.class,
+				TitleDocIdMapper.class);
+		MultipleInputs.addInputPath(job3, new Path(TITLE_ID), KeyValueTextInputFormat.class, DocIdCountMapper.class);
 		/* 출력 관련 */
 		job3.setReducerClass(JobIdTitleReducer.class);
 		job3.setMapOutputKeyClass(Text.class);
@@ -185,6 +179,5 @@ public class SearchDocs {
 		// 10. 실행
 		job.waitForCompletion(true);
 
-		
 	}
 }
