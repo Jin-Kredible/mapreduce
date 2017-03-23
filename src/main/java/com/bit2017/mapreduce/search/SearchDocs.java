@@ -47,7 +47,10 @@ public class SearchDocs {
 			log.info("search----------------->" + search);
 
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-
+			
+			if(tokenize.countTokens() <1) {
+				return;
+			}
 			
 			while (tokenize.hasMoreTokens()) {
 				log.info("----------->tokenize worked");
