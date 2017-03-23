@@ -55,7 +55,7 @@ public class SearchDocs {
 				if (saveToken.equals(search)) {
 					log.info("came into for loops ---------->");
 					word.set(saveToken.toLowerCase());
-					context.write(word, one);
+					context.write(key, one);
 				}
 			}
 		}
@@ -153,9 +153,7 @@ public class SearchDocs {
 		// 9.출력 디렉토리 지정gg
 		FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/topN"));
 
-		if (job2.waitForCompletion(true) == false) {
-			return;
-		}
+		job2.waitForCompletion(true);
 
 		Job job3 = new Job(conf, "Join ID & Title");
 		// 1. Job instance 초기화 과정
@@ -168,8 +166,8 @@ public class SearchDocs {
 
 		/* 입력 관련 */
 		MultipleInputs.addInputPath(job3, new Path(SEARCHDOC_TOPN), KeyValueTextInputFormat.class,
-				TitleDocIdMapper.class);
-		MultipleInputs.addInputPath(job3, new Path(TITLE_ID), KeyValueTextInputFormat.class, DocIdCountMapper.class);
+				JoinIDTitle.TitleDocIdMapper.class);
+		MultipleInputs.addInputPath(job3, new Path(TITLE_ID), KeyValueTextInputFormat.class, JoinIDTitle.DocIdCountMapper.class);
 		/* 출력 관련 */
 		job3.setReducerClass(JobIdTitleReducer.class);
 		job3.setMapOutputKeyClass(Text.class);
