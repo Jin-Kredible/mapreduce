@@ -115,16 +115,16 @@ public class SearchDocs {
 		Configuration conf = new Configuration();
 		
 		
-		conf.set("SearchText", args[2].toString());
+		conf.set("SearchDocs", args[2].toString());
 		
 		
-		Job job = new Job(conf, "WordCount");
+		Job job = new Job(conf, "Search Docs");
 		
 		
 		
 		log.info("args 2 ---------------------->" + args[2]);
 		// 1. Job instance 초기화 과정
-		job.setJarByClass(SearchText.class);
+		job.setJarByClass(SearchDocs.class);
 		
 		//2. 맵퍼 클래스 지정
 		job.setMapperClass(MyMapper.class);
@@ -132,13 +132,11 @@ public class SearchDocs {
 		//3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
 		
-		job.setNumReduceTasks(2);
-		
 		//4. 출력키 타입
-		job.setMapOutputKeyClass(StringWritable.class);
+		job.setMapOutputKeyClass(LongWritable.class);
 		
 		//5. 출력밸류 타입
-		job.setMapOutputValueClass(Numberwritable.class);
+		job.setMapOutputValueClass(Text.class);
 		
 		//6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(TextInputFormat.class);
