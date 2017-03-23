@@ -28,7 +28,7 @@ public class SearchDocs {
 
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1L);
-		int count1 =0;
+		
 
 		@Override
 		protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)
@@ -48,7 +48,7 @@ public class SearchDocs {
 			log.info("search----------------->" + search);
 
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-
+			int count1 =0;
 			while (tokenize.hasMoreTokens()) {
 				String saveToken = tokenize.nextToken();
 				log.info("----------->tokenize worked");
@@ -70,15 +70,14 @@ public class SearchDocs {
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Reducer<Text, LongWritable, Text, Text>.Context context) throws IOException, InterruptedException {
 
-			long unique = 0;
-			for (int i = 0; i < 1; i++) {
-				unique += 1;
-				log.info("------------>" + unique);
+			long sum = 0;
+			for(LongWritable value : values) {
+				sum +=value.get();
 			}
-			sumWritable.set(unique);
+			sumWritable.set(sum);
 			// context.getCounter("Words Status", "Count of all
 			// Words").increment(sum);
-			context.getCounter("Words Status", "Count unique words").increment(unique);
+			context.getCounter("Words Status", "Count unique words").increment(sum);
 			
 
 			context.write(key, new Text(sumWritable.toString()));
