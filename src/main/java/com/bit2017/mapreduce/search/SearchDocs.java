@@ -28,6 +28,7 @@ public class SearchDocs {
 
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1L);
+		int count1 =0;
 
 		@Override
 		protected void setup(Mapper<Text, Text, Text, LongWritable>.Context context)
@@ -47,8 +48,7 @@ public class SearchDocs {
 			log.info("search----------------->" + search);
 
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-			
-			int count1 = 0;
+
 			while (tokenize.hasMoreTokens()) {
 				String saveToken = tokenize.nextToken();
 				log.info("----------->tokenize worked");
