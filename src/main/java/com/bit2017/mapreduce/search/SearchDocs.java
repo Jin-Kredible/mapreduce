@@ -115,7 +115,7 @@ public class SearchDocs {
 		Configuration conf = new Configuration();
 		
 		
-		conf.set("SearchDocs", args[2].toString());
+		conf.set("SearchText", args[2].toString());
 		
 		
 		Job job = new Job(conf, "Search Docs");
