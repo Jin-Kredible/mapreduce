@@ -192,7 +192,7 @@ public class SearchDocs {
 				JoinIDTitle.TitleDocIdMapper.class);
 		MultipleInputs.addInputPath(job3, new Path(TITLE_ID), KeyValueTextInputFormat.class, JoinIDTitle.DocIdCountMapper.class);
 		/* 출력 관련 */
-		job3.setReducerClass(JobIdTitleReducer.class);
+		job3.setReducerClass(JoinIDTitle.JobIdTitleReducer.class);
 		job3.setMapOutputKeyClass(Text.class);
 		job3.setMapOutputValueClass(Text.class);
 		job3.setOutputFormatClass(TextOutputFormat.class);
