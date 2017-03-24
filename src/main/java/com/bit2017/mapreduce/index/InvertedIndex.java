@@ -12,7 +12,8 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class InvertedIndex {
 	public static class MyMapper extends Mapper<Text, Text, Text, Text> {
-
+		
+		private Set<String> words = new HashSet<String>();
 		private Text word = new Text();
 
 		@Override
@@ -22,13 +23,18 @@ public class InvertedIndex {
 			String line = contents.toString();
 
 			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-
+			
+			words.clear();
 			/* log.info("----------->tokenize worked"); */
 			while (tokenize.hasMoreTokens()) {
 				String token = tokenize.nextToken().toLowerCase();
-				word.set(token);
-				context.write(word, docId);
+				words.add(token);
 			}
+			for(String s : words){
+				word.set(s);
+				context.write(docId, word );
+			}
+	
 		}
 	}
 
