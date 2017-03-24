@@ -96,7 +96,7 @@ public class StringSort {
 		job.setMapOutputKeyClass(Text.class);
 		
 		//5. 출력밸류 타입
-		job.setMapOutputValueClass(Text.class);
+		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(TextInputFormat.class);
