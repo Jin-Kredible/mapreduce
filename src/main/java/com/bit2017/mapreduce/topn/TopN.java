@@ -59,12 +59,12 @@ public class TopN {
 			
 		}
 		
-		public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+		public static class MyReducer extends Reducer<Text, LongWritable, Text, Text> {
 			private int topN = 10;
 			private PriorityQueue<ItemFreq> pq = null;
 			
 			@Override
-			protected void setup(Reducer<Text, LongWritable, Text, LongWritable>.Context context)
+			protected void setup(Reducer<Text, LongWritable, Text, Text>.Context context)
 					throws IOException, InterruptedException {
 				topN = context.getConfiguration().getInt("topN", 10);
 				pq = new PriorityQueue<ItemFreq>(10, new ItemFreqComparator());
@@ -73,7 +73,7 @@ public class TopN {
 			
 			@Override
 			protected void reduce(Text key, Iterable<LongWritable> value,
-					Reducer<Text, LongWritable, Text, LongWritable>.Context arg2)
+					Reducer<Text, LongWritable, Text, Text>.Context arg2)
 					throws IOException, InterruptedException {
 				Long sum =0L;
 				for(LongWritable values : value) {
@@ -95,11 +95,11 @@ public class TopN {
 			}
 			
 			@Override
-			protected void cleanup(Reducer<Text, LongWritable, Text, LongWritable>.Context context)
+			protected void cleanup(Reducer<Text, LongWritable, Text, Text>.Context context)
 					throws IOException, InterruptedException {
 				while(pq.isEmpty()==false) {
 					ItemFreq itemFreq = pq.remove();
-					context.write(new Text(itemFreq.getItem()), new LongWritable(itemFreq.getFreq()));
+					context.write(new Text(itemFreq.getItem()), new Text(itemFreq.getFreq().toString()));
 				}
 			}
 			
