@@ -41,8 +41,15 @@ public class InvertedIndex {
 			
 /*			long unique = 0;*/
 			String s ="";
+			
+			boolean isFirst = true;
 			for (Text docId : docIds) {
-				s += (docId.toString() + ", ");
+				if(isFirst==false) {
+					s += ", ";
+				} else {
+					isFirst = false;
+				}
+				s += docId.toString();
 			}
 
 			context.write(word, new Text(s));
