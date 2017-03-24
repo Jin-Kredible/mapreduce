@@ -13,52 +13,6 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 
 public class StringSort {
-	
-	public static class MyMapper extends Mapper<Text, Text, Text, LongWritable> {
-		
-		private Text word = new Text();
-		LongWritable one = new LongWritable(1L);
-
-
-		@Override
-		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
-				throws IOException, InterruptedException {
-			/*log.info("-------------> map() called");*/
-			String line = value.toString();
-			
-			StringTokenizer tokenize = new StringTokenizer(line, "\r\n\t,|()<> ''.:");
-			
-			
-			/*	log.info("----------->tokenize worked");*/
-			while(tokenize.hasMoreTokens()) {
-				word.set(tokenize.nextToken().toLowerCase());
-				context.write(word, one);
-			}
-	
-		}
-		
-	}
-	
-	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
-		
-		private LongWritable sumWritable = new LongWritable();
-		
-		@Override
-		protected void reduce(Text key, Iterable<LongWritable> values,
-				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
-
-			long unique = 0;
-			for(LongWritable value : values) {
-				unique +=value.get();
-			}
-			
-			sumWritable.set(unique);
-			context.getCounter("Words Status", "Count unique words").increment(unique);
-			
-			context.write(key, sumWritable);
-			
-		}
-	}
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = new Configuration();
@@ -68,16 +22,16 @@ public class StringSort {
 		job.setJarByClass(StringSort.class);
 		
 		//2. 맵퍼 클래스 지정
-		job.setMapperClass(MyMapper.class);
+		job.setMapperClass(Mapper.class);
 		
 		//3. 리듀서 클래스 지정
-		job.setReducerClass(MyReducer.class);
+		job.setReducerClass(Reducer.class);
 		
 		//4. 출력키 타입
 		job.setMapOutputKeyClass(Text.class);
 		
 		//5. 출력밸류 타입
-		job.setMapOutputValueClass(LongWritable.class);
+		job.setMapOutputValueClass(Text.class);
 		
 		//6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
