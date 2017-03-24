@@ -14,12 +14,12 @@ import com.bit2017.mapreduce.wordcount.*;
 
 public class JoinIDTitle {
 
-	public static class TitleDocIdMapper extends Mapper<LongWritable, Text, Text, Text> {
+	public static class TitleDocIdMapper extends Mapper<Text, LongWritable, Text, Text> {
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, Text>.Context context) throws IOException, InterruptedException {
+		protected void map(Text key, LongWritable value, Mapper<Text, LongWritable, Text, Text>.Context context) throws IOException, InterruptedException {
 		
-			context.write(value, new Text(key + "\t" + 1));
+			context.write(new Text(key + "\t" + 1), new Text(value.toString()));
 			
 		}
 
