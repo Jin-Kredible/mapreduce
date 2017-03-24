@@ -69,6 +69,9 @@ public class InvertedIndex {
 
 		// 3. 리듀서 클래스 지정
 		job.setReducerClass(MyReducer.class);
+		
+		//리듀스 개수 지정
+		job.setNumReduceTasks(10);
 
 		// 4. 맵출력키 타입
 		job.setMapOutputKeyClass(Text.class);
