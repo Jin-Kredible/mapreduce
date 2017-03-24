@@ -156,7 +156,7 @@ public class SearchDocs {
 		job2.setMapOutputKeyClass(Text.class);
 
 		// 5. 출력밸류 타입
-		job2.setMapOutputValueClass(Text.class);
+		job2.setMapOutputValueClass(LongWritable.class);
 
 		// 6. 입력파일 포맷 지정(생략)
 		job2.setInputFormatClass(KeyValueTextInputFormat.class);
