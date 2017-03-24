@@ -32,7 +32,7 @@ public class InvertedIndex {
 			}
 			for(String s : words){
 				word.set(s);
-				context.write(docId, word );
+				context.write(word, docId );
 			}
 	
 		}
