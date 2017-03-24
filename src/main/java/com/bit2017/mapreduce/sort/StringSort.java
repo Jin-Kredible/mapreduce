@@ -33,6 +33,10 @@ public class StringSort {
 		//5. 출력밸류 타입
 		job.setMapOutputValueClass(Text.class);
 		
+		job.setOutputKeyClass(Text.class);
+		
+		job.setOutputValueClass(Text.class);
+		
 		//6. 입력파일 포맷 지정(생략)
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		
