@@ -40,19 +40,19 @@ public class InvertedIndex {
 				throws IOException, InterruptedException {
 			
 /*			long unique = 0;*/
-			String s ="";
+			StringBuilder sb =new StringBuilder();
 			
 			boolean isFirst = true;
 			for (Text docId : docIds) {
 				if(isFirst==false) {
-					s += ", ";
+					sb.append(", ");
 				} else {
 					isFirst = false;
 				}
-				s += docId.toString();
+				sb.append(docId.toString());
 			}
 
-			context.write(word, new Text(s));
+			context.write(word, new Text(sb.toString()));
 
 		}
 	}
