@@ -1,9 +1,7 @@
 package com.bit2017.mapreduce.sort;
 
 import java.io.*;
-import java.util.*;
 
-import org.apache.commons.logging.*;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
