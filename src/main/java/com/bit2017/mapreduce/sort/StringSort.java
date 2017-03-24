@@ -14,14 +14,14 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class StringSort {
 	
-	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+	public static class MyMapper extends Mapper<Text, Text, Text, LongWritable> {
 		
 		private Text word = new Text();
 		LongWritable one = new LongWritable(1L);
 
 
 		@Override
-		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+		protected void map(Text key, Text value, Mapper<Text, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			/*log.info("-------------> map() called");*/
 			String line = value.toString();
@@ -34,19 +34,8 @@ public class StringSort {
 				word.set(tokenize.nextToken().toLowerCase());
 				context.write(word, one);
 			}
-
-			
+	
 		}
-
-
-		//run 은 보통 오버라이드를 하지 않음
-		/*	@Override
-				public void run(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
-						throws IOException, InterruptedException {
-					// TODO Auto-generated method stub
-					super.run(context);
-				}
-		*/
 		
 	}
 	
@@ -57,21 +46,13 @@ public class StringSort {
 		@Override
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
-				
-		/*	long sum =0;
-			for(LongWritable value : values) {
-				sum += value.get();
-				log.info("------------>" + sum);
-			}*/
-			
+
 			long unique = 0;
 			for(LongWritable value : values) {
 				unique +=value.get();
 			}
 			
-			/*sumWritable.set(sum);*/
 			sumWritable.set(unique);
-			//context.getCounter("Words Status", "Count of all Words").increment(sum);
 			context.getCounter("Words Status", "Count unique words").increment(unique);
 			
 			context.write(key, sumWritable);
@@ -99,7 +80,7 @@ public class StringSort {
 		job.setMapOutputValueClass(LongWritable.class);
 		
 		//6. 입력파일 포맷 지정(생략)
-		job.setInputFormatClass(TextInputFormat.class);
+		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
 		job.setOutputFormatClass(SequenceFileOutputFormat.class);
