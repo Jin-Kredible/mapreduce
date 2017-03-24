@@ -102,15 +102,15 @@ public class StringSort {
 		job.setInputFormatClass(TextInputFormat.class);
 		
 		//7. 출력파일 포맷 지정(생략 가능)
-		job.setOutputFormatClass(TextOutputFormat.class);
+		job.setOutputFormatClass(SequenceFileOutputFormat.class);
 		
 		
 		//8.입력파일 이름 지정
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		
 		//9.출력 디렉토리 지정gg
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		
+		SequenceFileOutputFormat.setOutputPath(job, new Path(args[1]));
+		SequenceFileOutputFormat.setOutputCompressionType(job, SequenceFile.CompressionType.BLOCK);
 		
 		
 		//10. 실행
